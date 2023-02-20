@@ -1,14 +1,35 @@
 
 export default class Deck {
-    constructor (config) {
+    constructor(config) {
+        this.cards = config.cards;
     }
 
-    shuffle () {
+    shuffle() {
+        let j, x, index;
+        let initalCards = this.cards.join(",");
+        for (index = this.cards.length - 1; index > 0; index--) {
+            j = Math.floor(Math.random() * (index + 1));
+            x = this.cards[index];
+            this.cards[index] = this.cards[j];
+            this.cards[j] = x;
+        }
+        if (initalCards !== this.cards.join(","))
+            return true;
+        return false;
     }
 
-    draw () {
+    insertAt(card, position = null) {
+        if (position === null) {
+            return !!this.cards.push(card);
+        }
+        return !!this.cards.splice(position, 0, card)
     }
 
-    getCardsCount () {
+    draw() {
+        return this.cards.shift();
+    }
+
+    getCardsCount() {
+        return this.cards.length;
     }
 }

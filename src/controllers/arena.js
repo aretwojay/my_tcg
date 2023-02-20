@@ -8,15 +8,17 @@ var secondClick = false;
 
 export default class ArenaController extends Controller {
 
-    constructor () {
+    constructor() {
         super('body');
 
-        
+
         this.up = new SideController(".side.opponent", this);
         this.down = new SideController(".side.player", this);
 
-        this.game = ModelFactory.get('game', {'up'  : ModelFactory.get('player', {type: 'computer'}),
-                                              'down': ModelFactory.get('player', {type: 'human'}) });
+        this.game = ModelFactory.get('game', {
+            'up': ModelFactory.get('player', { type: 'computer' }),
+            'down': ModelFactory.get('player', { type: 'human' })
+        });
 
         this.on('clickDeck', this.onClickDeck.bind(this));
         this.on('clickHand', this.onClickHand.bind(this));
@@ -26,7 +28,7 @@ export default class ArenaController extends Controller {
 
     }
 
-    onClickDeck (deck) {
+    onClickDeck(deck) {
         var s = deck.getSide();
 
         var self = this;
@@ -39,16 +41,16 @@ export default class ArenaController extends Controller {
 
         if (self.game[s].deck.getCardsCount() === 0) {
             self.trigger('emptyDeck');
-        }              
+        }
     }
 
 
-    onClickHand (card) {
+    onClickHand(card) {
         // api call then
         this.trigger('playCard', card);
     }
 
-    onClickBoard (card) {
+    onClickBoard(card) {
         var self = this;
         if (!secondClick) {
             this.trigger('activateCard', card);
@@ -63,19 +65,19 @@ export default class ArenaController extends Controller {
         }
     }
 
-    onTargetHand (hand) {
+    onTargetHand(hand) {
         if (secondClick) {
             this.trigger('attackHand', hand);
         }
     }
 
-    onClickEndTurn () {
+    onClickEndTurn() {
         var self = this;
-        this.trigger('endTurn', { getSide: () => { return 'down'} });
+        this.trigger('endTurn', { getSide: () => { return 'down' } });
         console.log('end turn');
 
         setTimeout(function () {
-            self.trigger('yourTurn', { getSide: () => { return 'down'} });
+            self.trigger('yourTurn', { getSide: () => { return 'down' } });
             console.log('your turn');
         }, 5000);
     }

@@ -1,12 +1,12 @@
 import Controller from './dom';
 
 export default class BoardController extends Controller {
-    constructor (selector, parent) {
+    constructor(selector, parent) {
         super(selector, parent);
 
         this.mCards = [];
         this.mActiveCard = null;
-        
+
         this.on('clickCard', this.onClickCard.bind(this));
 
         this.parent.on('playCard', this.onPlayCard.bind(this));
@@ -19,11 +19,11 @@ export default class BoardController extends Controller {
 
     }
 
-    onClickCard (card) {
+    onClickCard(card) {
         this.parent.trigger('clickBoard', card);
     }
 
-    onPlayCard (card) {
+    onPlayCard(card) {
         var self = this,
             state = card.getState();
 
@@ -36,21 +36,21 @@ export default class BoardController extends Controller {
         card.setParent(this);
         card.getDom().addClass('board');
 
-        card.getDom().on('transitionend', function te () {
+        card.getDom().on('transitionend', function te() {
             var $this = $(this);
 
             $this.off('transitionend', te);
 
-            card.getDom().css({"top": self.parent.getDom().height() / 2 - 70});
+            card.getDom().css({ "top": self.parent.getDom().height() / 2 - 70 });
 
             self.mCards.forEach((cardCtrl) => {
                 var $dom = cardCtrl.getDom();
-                $dom.offset({"left": start + cardCtrl.getState().position * 105 + 5});
+                $dom.offset({ "left": start + cardCtrl.getState().position * 105 + 5 });
             });
 
             $this.removeClass('play');
         });
-        
+
         card.getDom().addClass('play');
 
         if (this.getSide() === "up") {
@@ -59,12 +59,12 @@ export default class BoardController extends Controller {
 
     }
 
-    onActivateCard (card) {
+    onActivateCard(card) {
         this.mActiveCard = card;
         card.getDom().addClass('active');
     }
 
-    onTargetCard (card) {
+    onTargetCard(card) {
         card.getDom().addClass('target');
         var intervalCount = 0,
             i = setInterval(function () {
@@ -79,7 +79,7 @@ export default class BoardController extends Controller {
             }, 1500);
     }
 
-    onAttack (target) {
+    onAttack(target) {
         var initOffset = this.mActiveCard.getDom().offset(),
             targetOffset = target.domTarget !== undefined ? target.domTarget.offset() : target.getDom().offset();
 
@@ -92,7 +92,7 @@ export default class BoardController extends Controller {
         }
 
         var activeCardDom = this.mActiveCard.getDom();
-        activeCardDom.on('transitionend', function te () {
+        activeCardDom.on('transitionend', function te() {
             var $this = $(this);
             $this.off('transitionend', te);
             $this.offset(initOffset);
@@ -103,9 +103,9 @@ export default class BoardController extends Controller {
         activeCardDom.offset(targetOffset);
     }
 
-    onDiscardCard (card) {
+    onDiscardCard(card) {
         this.mCards.splice(card.getState().position, 1);
-        card.getDom().removeClass('board');        
+        card.getDom().removeClass('board');
     }
 
 }
