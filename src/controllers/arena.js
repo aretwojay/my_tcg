@@ -38,7 +38,7 @@ export default class ArenaController extends Controller {
             return s;
         };
         self.trigger('drawCard', cardState);
-
+        console.log(self.game[s].deck)
         if (self.game[s].deck.getCardsCount() === 0) {
             self.trigger('emptyDeck');
         }

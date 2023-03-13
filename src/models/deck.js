@@ -6,14 +6,14 @@ export default class Deck {
 
     shuffle() {
         let j, x, index;
-        let initalCards = this.cards.join(",");
+        let initalCards = JSON.stringify(this.cards);
         for (index = this.cards.length - 1; index > 0; index--) {
             j = Math.floor(Math.random() * (index + 1));
             x = this.cards[index];
             this.cards[index] = this.cards[j];
             this.cards[j] = x;
         }
-        if (initalCards !== this.cards.join(","))
+        if (initalCards !== JSON.stringify(this.cards))
             return true;
         return false;
     }
@@ -26,6 +26,9 @@ export default class Deck {
     }
 
     draw() {
+        if (!this.cards.length) {
+            return false;
+        }
         return this.cards.shift();
     }
 
