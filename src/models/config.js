@@ -13,7 +13,15 @@ export default {
     },
     "deck": {
         "class": DeckModel,
-        "param": '{"cards" : [{"face":"card-1"}, {"face":"card-2"}, {"face":"card-3"}, {"face":"card-4"}, {"face":"card-5"}, {"face":"card-6"}]}'
+        "param": `{"cards" : [
+        {"face":"card-1","life":30,"strength":20,"def":20}, 
+        {"face":"card-2","life":20,"strength":40,"def":20}, 
+        {"face":"card-3","life":40,"strength":50,"def":20}, 
+        {"face":"card-4","life":20,"strength":20,"def":20}, 
+        {"face":"card-5","life":50,"strength":20,"def":20}, 
+        {"face":"card-6","life":20,"strength":20,"def":20}, 
+        {"face":"card-7","life":70,"strength":20,"def":20}
+    ]}`
     },
     "player": {
         "class": PlayerModel,

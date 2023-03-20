@@ -3,7 +3,7 @@ import EventManager from "../eventManager";
 export default class Game extends EventManager {
     constructor(config) {
         super();
-        this.turn = "up";
+        this.turn = "down";
         this.up = config.up;
         this.down = config.down;
     }
@@ -25,11 +25,9 @@ export default class Game extends EventManager {
         if (typeof action != "string" || (payload && typeof payload != "string")) {
             return false;
         }
-        if (side === "up") {
-            return this.up[action](payload);
+        if (side === "up" || side === "down") {
+            return this[side][action](payload);
         }
-        else if (this.turn === "down") {
-            return this.down[action](payload);
-        }
+
     }
 }

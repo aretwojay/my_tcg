@@ -4,20 +4,18 @@ import Player from "../src/models/player";
 import config from '../src/models/config.js';
 import ModelFactory from '../src/models/factory';
 
-let deck = ModelFactory.get("deck");
 let defaultCards = JSON.parse(config.deck.param).cards;
 describe("Class Player", () => {
     describe("constructor(object config):", () => {
         it("takes Deck from parameter", () => {
-            let player = new Player({ deck })
+            let player = new Player()
             let isArray = typeof player.deck === "array";
             let isDeck = player.deck instanceof Deck;
             expect(isArray || isDeck).toBe(true);
         });
     })
     describe("bool shuffle(string type = “deck”):", () => {
-        let deck = ModelFactory.get("deck");
-        let player = new Player({ deck });
+        let player = new Player();
         if (player.shuffle()) {
             it("shuffle array 'cards' and return true", () => {
                 expect(player.deck.cards).not.toEqual(defaultCards);
@@ -29,31 +27,29 @@ describe("Class Player", () => {
             });
         }
         it("if type != 'deck' or 'cemetary', return false", () => {
-            let deck = new Deck({ cards: [] });
-            let player = new Player({ deck });
-            expect(player.shuffle()).toBe(false);
+            let player = new Player();
+            expect(player.shuffle("hello")).toBe(false);
         });
     })
     describe("bool draw():", () => {
         it("return first card of deck", () => {
-            let deck = ModelFactory.get("deck");
-            let player = new Player({ deck })
-            expect(player.draw()).toEqual({ "face": "card-1" });
+            let player = new Player()
+            expect(player.draw()).toEqual({ "face": "card-1", "life": 20, "strength": 20, "def": 20 });
         });
         it("if no cards in the deck, return false", () => {
-            let deck = ModelFactory.get("deck");
-            let player = new Player({ deck })
-            player.draw();
-            player.draw();
+            let player = new Player();
+            for (let i = 0; i <= 7; i++) {
+                player.draw();
+            }
             expect(player.draw()).toBe(false);
         });
     })
     describe("bool playCard(int position):", () => {
         it("remove card in n index and add this card into the board and return true", () => {
-            let player = new Player({ deck });
+            let player = new Player();
             player.draw();
             player.playCard(0);
-            expect(player.board.cards[0]).toEqual({ "face": "card-1" });;
+            expect(player.board.cards[0]).toEqual({ "face": "card-1", "life": 20, "strength": 20, "def": 20 });;
         });
     })
     describe("bool discard(int position):", () => {
@@ -62,7 +58,7 @@ describe("Class Player", () => {
             let player = new Player({ deck });
             player.draw();
             player.discard();
-            expect(player.cemetary.cards[0]).toEqual({ "face": "card-1" });
+            expect(player.cemetary.cards[0]).toEqual({ "face": "card-1", "life": 20, "strength": 20, "def": 20 });
         });
     })
     describe("bool attack(int position, Pawn target):", () => {
@@ -70,14 +66,11 @@ describe("Class Player", () => {
             let deck = ModelFactory.get("deck");
             let player1 = new Player({ deck });
             let player2 = new Player({ deck });
+            let target = new Pawn(100, 20, 80);
             player1.draw();
             player1.playCard(0);
-            player2.draw();
-            player2.playCard(0);
-            // console.log(player1);
-            console.log(player2.board.cards)
-            console.log(player1.attack(0, player2.board.cards[0]))
-            // expect(player.cemetary.cards[0]).toEqual("a");
+            player1.attack(0, player2)
+            expect(player2.life).toEqual(80);
         });
     })
 })

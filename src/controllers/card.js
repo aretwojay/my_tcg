@@ -1,11 +1,11 @@
 import Controller from './dom';
 
 export default class CardController extends Controller {
-    
-    constructor (parent) {
+
+    constructor(parent) {
         super('<div></div>', parent);
 
-        this.$dom.append('<div></div>').find('div:first-child').addClass('card-front');
+        this.$dom.append('<div></div>').find('div:first-child').addClass('card-front').html(`<div class='stats'></div>`);
         this.$dom.append('<div></div>').find('div:last-child').addClass('card-back');
 
         this.$dom.addClass('card');
@@ -16,36 +16,37 @@ export default class CardController extends Controller {
         this.$dom.appendTo(parent.getDom());
     }
 
-    setState (state) {
+    setState(state) {
         super.setState(state);
-
+        console.log(state)
         this.$dom.find('div:first-child').addClass(state.face);
+        this.$dom.find('.stats:first-child').html(`PV ${state.life} STR ${state.strength} DEF ${state.def}`);
+
     }
 
-    setParent (parent) {
+    setParent(parent) {
         super.setParent(parent);
-
     }
 
-    onOver () {
+    onOver() {
         if (this.$dom.hasClass('hand')) {
             var top = this.getSide() === "down" ?
-                    this.root.getDom().height() / 2 - 70 - 30 :
-                    -70 + 30;
+                this.root.getDom().height() / 2 - 70 - 30 :
+                -70 + 30;
             this.$dom.css('top', top);
         }
     }
 
-    onOut () {
+    onOut() {
         if (this.$dom.hasClass('hand')) {
             var top = this.getSide() === "down" ?
-                    this.root.getDom().height() / 2 - 70 :
-                    -70;
+                this.root.getDom().height() / 2 - 70 :
+                -70;
             this.$dom.css('top', top);
         }
     }
 
-    onClick () {
+    onClick() {
         this.parent.trigger('clickCard', this);
     }
 

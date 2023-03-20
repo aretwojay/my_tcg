@@ -32,7 +32,6 @@ describe("Class Deck", () => {
         it("if n given, add card to a given n position in 'cards'", () => {
             deck.insertAt({ "face": "card-2" }, 2)
             defaultCards.splice(2, 0, { "face": "card-2" })
-            console.log(JSON.stringify(defaultCards), JSON.stringify(deck.cards))
             expect(deck.cards).toEqual(defaultCards);
         });
 

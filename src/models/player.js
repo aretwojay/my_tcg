@@ -3,7 +3,7 @@ import Pawn from './pawn';
 export default class Player extends Pawn {
 
     constructor(config) {
-        super(100, 20, 5);
+        super(100, 0, 0);
 
         this.deck = ModelFactory.get("deck");
         this.cemetary = ModelFactory.get("cemetary");
@@ -43,9 +43,9 @@ export default class Player extends Pawn {
 
     attack(position, target) {
         let card = this.board.cards[position];
-        console.log(card);
-        if (target instanceof Pawn) {
-            return this.board.cards[position]["attack"](target)
+        if (target instanceof Pawn && card.life && card.strength && card.def) {
+            let pawn = new Pawn(card.life, card.strength, card.def);
+            return pawn.attack(target)
         }
         return false;
     }
