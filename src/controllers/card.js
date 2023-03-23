@@ -18,10 +18,8 @@ export default class CardController extends Controller {
 
     setState(state) {
         super.setState(state);
-        console.log(state)
         this.$dom.find('div:first-child').addClass(state.face);
         this.$dom.find('.stats:first-child').html(`PV ${state.life} STR ${state.strength} DEF ${state.def}`);
-
     }
 
     setParent(parent) {

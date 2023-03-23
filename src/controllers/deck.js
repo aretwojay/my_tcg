@@ -24,7 +24,6 @@ export default class DeckController extends Controller {
         var self = this,
             cardCtrl,
             card;
-
         if (cardState !== undefined) {
             cardCtrl = new CardController(self.parent),
                 cardCtrl.setState(cardState);

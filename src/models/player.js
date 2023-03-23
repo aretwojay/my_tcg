@@ -43,9 +43,15 @@ export default class Player extends Pawn {
 
     attack(position, target) {
         let card = this.board.cards[position];
+        console.log("position", position)
+        console.log("card", card)
         if (target instanceof Pawn && card.life && card.strength && card.def) {
             let pawn = new Pawn(card.life, card.strength, card.def);
-            return pawn.attack(target)
+            if (pawn.attack(target)) {
+                console.log("attacker life", pawn.life);
+                card.life = pawn.life;
+                return true;
+            }
         }
         return false;
     }

@@ -80,9 +80,9 @@ export default class BoardController extends Controller {
     }
 
     onAttack(target) {
+        this.mActiveCard.setState(this.mActiveCard.mState)
         var initOffset = this.mActiveCard.getDom().offset(),
             targetOffset = target.domTarget !== undefined ? target.domTarget.offset() : target.getDom().offset();
-
         if (this.getSide() === "down") {
             targetOffset.top += 20;
             targetOffset.left += 70;
@@ -90,12 +90,11 @@ export default class BoardController extends Controller {
             targetOffset.top -= 20;
             targetOffset.left -= 70;
         }
-
         var activeCardDom = this.mActiveCard.getDom();
         activeCardDom.on('transitionend', function te() {
             var $this = $(this);
             $this.off('transitionend', te);
-            $this.offset(initOffset);
+            $this.offset(initOffset || 0);
             activeCardDom.removeClass('attack');
         });
         activeCardDom.addClass('attack');

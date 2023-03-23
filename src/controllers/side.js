@@ -24,10 +24,11 @@ export default class SideController extends Controller {
         this.on('clickEndTurn', this.fwdToParent.bind(this, 'clickEndTurn'));
 
         this.parent.on('drawCard', this.fwdToChild.bind(this, 'drawCard'));
+        // this.parent.on('emptyDeck', this.fwdToChild.bind(this, 'emptyDeck'));
         this.parent.on('playCard', this.fwdToChild.bind(this, 'playCard'));
         this.parent.on('activateCard', this.fwdToChild.bind(this, 'activateCard'));
         this.parent.on('targetCard', this.fwdToChild.bind(this, 'targetCard', 'attackCard'));
-        this.parent.on('discardCard', this.fwdToChild.bind(this, 'activateCard'));
+        this.parent.on('discardCard', this.fwdToChild.bind(this, 'discardCard', 'onDiscardCard'));
         this.parent.on('attackHand', this.fwdToChild.bind(this, false, 'attackHand'));
 
         if (this.side === 'down') {
@@ -37,14 +38,13 @@ export default class SideController extends Controller {
 
     }
 
-    fwdToParent (event, p) {
+    fwdToParent(event, p) {
         this.parent.trigger(event, p);
     }
 
-    fwdToChild (sameSide, oppositeSide, payload) {
+    fwdToChild(sameSide, oppositeSide, payload) {
 
         payload = payload || oppositeSide;
-
         if (payload.getSide() === this.getSide()) {
             if (sameSide !== false) {
                 this.trigger(sameSide, payload);
@@ -53,6 +53,6 @@ export default class SideController extends Controller {
             if (typeof oppositeSide === "string") {
                 this.trigger(oppositeSide, payload);
             }
-        }        
+        }
     }
 }

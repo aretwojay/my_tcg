@@ -34,7 +34,7 @@ describe("Class Player", () => {
     describe("bool draw():", () => {
         it("return first card of deck", () => {
             let player = new Player()
-            expect(player.draw()).toEqual({ "face": "card-1", "life": 20, "strength": 20, "def": 20 });
+            expect(player.draw()).toEqual({ "face": "card-1", "life": 30, "strength": 20, "def": 20 });
         });
         it("if no cards in the deck, return false", () => {
             let player = new Player();
@@ -49,7 +49,7 @@ describe("Class Player", () => {
             let player = new Player();
             player.draw();
             player.playCard(0);
-            expect(player.board.cards[0]).toEqual({ "face": "card-1", "life": 20, "strength": 20, "def": 20 });;
+            expect(player.board.cards[0]).toEqual({ "face": "card-1", "life": 30, "strength": 20, "def": 20 });;
         });
     })
     describe("bool discard(int position):", () => {
@@ -58,7 +58,7 @@ describe("Class Player", () => {
             let player = new Player({ deck });
             player.draw();
             player.discard();
-            expect(player.cemetary.cards[0]).toEqual({ "face": "card-1", "life": 20, "strength": 20, "def": 20 });
+            expect(player.cemetary.cards[0]).toEqual({ "face": "card-1", "life": 30, "strength": 20, "def": 20 });
         });
     })
     describe("bool attack(int position, Pawn target):", () => {
