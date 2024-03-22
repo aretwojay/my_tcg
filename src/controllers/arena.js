@@ -138,11 +138,11 @@ export default class ArenaController extends Controller {
         //     }
         // }, 3000);
 
-        setTimeout(function () {
-            self.trigger('yourTurn', { getSide: () => { return 'down' } });
-            console.log('your turn');
-            self.game.changeTurn();
-        }, 5000);
+        // setTimeout(function () {
+        //     self.trigger('yourTurn', { getSide: () => { return 'down' } });
+        //     console.log('your turn');
+        //     self.game.changeTurn();
+        // }, 5000);
     }
 
 }
